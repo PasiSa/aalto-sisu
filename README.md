@@ -3,15 +3,20 @@
 This small repository implements the interactions with Aalto SISU API gateway
 to connect A+ course instances with their respective SISU realisations.
 The implementation extends the StudentInfoSystem class interface in A+.
-See the inline documentation at the base class definition (sis.py) for
-more details.
+See the inline documentation at the base class definition in the main
+A+ repository (sis.py) for more details.
 
-Assuming that you clone this repo under a created "plugins" directory under
-your local copy of the a-plus git repository, the following settings need
-to be applied in order to take the plugin into use:
+## Installation and setup
+
+The package can be installed using pip:
+
+    pip install git+https://github.com/apluslms/aalto-sisu@0.1.0#egg=aalto-sisu==0.1.0
+
+In addition, the following settings need to be applied in order to take
+the plugin into use:
 
     # Student Information System plugin settings
-    SIS_PLUGIN_MODULE = 'plugins.aalto-sisu.sis_aalto'
+    SIS_PLUGIN_MODULE = 'aalto_sisu.sis_aalto'
     SIS_PLUGIN_CLASS = 'SisuAalto'
 
     # Aalto-SISU SIS plugin settings
