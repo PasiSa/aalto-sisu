@@ -8,9 +8,10 @@ A+ repository (sis.py) for more details.
 
 ## Installation and setup
 
-The package can be installed using pip:
+The package can be installed using pip (replace 0.2.0 with the current version
+number, as can be found in this GitHub repository):
 
-    pip install git+https://github.com/apluslms/aalto-sisu@0.1.0#egg=aalto-sisu==0.1.0
+    pip install git+https://github.com/apluslms/aalto-sisu@0.2.0#egg=aalto-sisu==0.2.0
 
 In addition, the following settings need to be applied in order to take
 the plugin into use:
