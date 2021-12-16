@@ -55,6 +55,7 @@ setup(
 
     install_requires=[
         'Django >=1.11.0, <4',
+        'requests >= 2.25.1, < 3',
     ],
     dependency_links=[
     ],
