@@ -3,14 +3,15 @@ from django.conf import settings
 import requests
 from course.sis import StudentInfoSystem
 
+HTTP_REQUEST_TIMEOUT = 5  # seconds
+
 class SisuAalto(StudentInfoSystem):
 
     def get_instances(self, course: str) -> List[Tuple[str, str]]:
+        # A+ should handle exceptions properly, so we do not do any special handling here
         url=f"{settings.AALTO_SISU_URL_PREFIX}/courseunitrealisations?code={course}&USER_KEY={settings.AALTO_SISU_API_KEY}"
-        response = requests.get(url)
-        if response.status_code != 200:
-            print(f"No SISU information found with given course code")
-            return []
+        response = requests.get(url, timeout = HTTP_REQUEST_TIMEOUT)
+        response.raise_for_status()
 
         json = response.json()
         instances = []
@@ -20,10 +21,9 @@ class SisuAalto(StudentInfoSystem):
 
     def request_from_enhanced_api(self, id: str) -> dict:
         url=f"{settings.AALTO_SISU_URL_PREFIX}/courseunitrealisations-enhanced?id={id}&USER_KEY={settings.AALTO_SISU_API_KEY}"
-        headers = {"X-ApiKey":f"{settings.AALTO_SISU_ENHANCED_API_KEY}"}
-        response = requests.get(url, headers=headers)
-        if response.status_code != 200:
-            raise Exception("No SISU information found with given SISU ID")
+        headers = {"X-ApiKey":str(settings.AALTO_SISU_ENHANCED_API_KEY)}
+        response = requests.get(url, headers=headers, timeout = HTTP_REQUEST_TIMEOUT)
+        response.raise_for_status()
         
         return response.json()[0]
 
