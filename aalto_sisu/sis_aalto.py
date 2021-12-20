@@ -21,7 +21,10 @@ class SisuAalto(StudentInfoSystem):
 
     def request_from_enhanced_api(self, id: str) -> dict:
         url=f"{settings.AALTO_SISU_URL_PREFIX}/courseunitrealisations-enhanced?id={id}&USER_KEY={settings.AALTO_SISU_API_KEY}"
-        headers = {"X-ApiKey":str(settings.AALTO_SISU_ENHANCED_API_KEY)}
+        if hasattr(settings, 'AALTO_SISU_ENHANCED_API_KEY'):
+            headers = {"X-ApiKey":str(settings.AALTO_SISU_ENHANCED_API_KEY)}
+        else:
+            headers = {"X-ApiKey":""}
         response = requests.get(url, headers=headers, timeout = HTTP_REQUEST_TIMEOUT)
         response.raise_for_status()
         
