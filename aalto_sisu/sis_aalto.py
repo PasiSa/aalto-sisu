@@ -3,14 +3,14 @@ from django.conf import settings
 import requests
 from course.sis import StudentInfoSystem
 
-HTTP_REQUEST_TIMEOUT = 5  # seconds
+HTTP_REQUEST_TIMEOUT = 20  # seconds
 
 class SisuAalto(StudentInfoSystem):
 
     def get_instances(self, course: str) -> List[Tuple[str, str]]:
         # A+ should handle exceptions properly, so we do not do any special handling here
         url=f"{settings.AALTO_SISU_URL_PREFIX}/courseunitrealisations?code={course}&USER_KEY={settings.AALTO_SISU_API_KEY}"
-        response = requests.get(url, timeout = HTTP_REQUEST_TIMEOUT)
+        response = requests.get(url, timeout=getattr(settings, 'AALTO_SISU_REQUEST_TIMEOUT', HTTP_REQUEST_TIMEOUT))
         response.raise_for_status()
 
         json = response.json()
@@ -25,7 +25,11 @@ class SisuAalto(StudentInfoSystem):
             headers = {"X-ApiKey":str(settings.AALTO_SISU_ENHANCED_API_KEY)}
         else:
             headers = {"X-ApiKey":""}
-        response = requests.get(url, headers=headers, timeout = HTTP_REQUEST_TIMEOUT)
+        response = requests.get(
+            url,
+            headers=headers,
+            timeout=getattr(settings, 'AALTO_SISU_REQUEST_TIMEOUT', HTTP_REQUEST_TIMEOUT),
+        )
         response.raise_for_status()
         
         return response.json()[0]
