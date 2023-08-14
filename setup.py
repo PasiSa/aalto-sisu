@@ -15,7 +15,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='aalto-sisu',
-    version='0.4.0',
+    version='0.4.1',
     description='Aalto-SISU plugin for A+ LMS',
     long_description=long_description,
     keywords='django',
@@ -40,6 +40,7 @@ setup(
         'Framework :: Django',
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.2',
 
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
@@ -54,7 +55,7 @@ setup(
     include_package_data = True,
 
     install_requires=[
-        'Django >=1.11.0, <4',
+        'Django >=1.11.0',
         'requests >= 2.25.1, < 3',
     ],
     dependency_links=[
